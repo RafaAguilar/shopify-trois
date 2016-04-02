@@ -32,7 +32,7 @@ class Json(OAuthEngine):
     extension = 'json'
     mime = 'application/json; charset=utf-8'
 
-     def __init__(self, shop_name, credentials, ignore_supported=False,
+    def __init__(self, shop_name, credentials, ignore_supported=False,
                  ignore_model_properties=False):
 
         self.api_call_limit = None
