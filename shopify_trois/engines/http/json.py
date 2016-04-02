@@ -32,10 +32,21 @@ class Json(OAuthEngine):
     extension = 'json'
     mime = 'application/json; charset=utf-8'
 
-    def __init__(self, shop_name, credentials, ignore_supported=False,
+     def __init__(self, shop_name, credentials, ignore_supported=False,
                  ignore_model_properties=False):
 
-        super().__init__(shop_name=shop_name, credentials=credentials)
+        self.api_call_limit = None
+
+        self.credentials = credentials
+
+        self.base_url = self._api_base.format(shop_name=shop_name)
+
+        self.session = requests.Session()
+
+        self.session.headers.update({'Content-Type': self.mime})
+
+        if credentials.oauth_access_token:
+            self.sync_access_token()
 
         #: When set to True, ignore checking for supported actions on models.
         self.ignore_supported = ignore_supported
